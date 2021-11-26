@@ -1,0 +1,47 @@
+/*
+ * Example section styling
+ */
+
+.modal{
+	display: none;
+	&_open{
+		z-index: 20;
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100vh;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: rgba(0,0,0,0.9);
+	}
+	&__close{
+		cursor: pointer;
+	}
+
+}
+
+@media only screen and (max-width: 1199px){
+	.modal{
+
+
+	}
+}
+
+@media only screen and (max-width: 991px) {
+	.modal {
+
+	}
+}
+	
+@media only screen and (max-width: 767px) {
+	.modal {
+
+	}
+}
+@media only screen and (max-width: 575px) {
+	.modal {
+
+	}
+}
