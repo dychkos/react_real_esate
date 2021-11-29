@@ -21,10 +21,9 @@ export enum RouteNames {
 export const publicRoutes: IRoute[] = [
     {path: RouteNames.HOME, exact: true, component: Home},
     {path: RouteNames.HOUSE_ONE, component: HousePage},
-    {path: RouteNames.USER_PROFILE, exact:true , component: UserProfile},
     {path: RouteNames.CREATE_HOUSE, exact:true , component: CreateHouse},
 ]
 
-// export const privateRoutes: IRoute[] = [
-//     {path: RouteNames.EVENT, exact: true, component: Event}
-// ]
+export const privateRoutes: IRoute[] = [
+    {path: RouteNames.USER_PROFILE, exact:true , component: UserProfile},
+]

@@ -1,28 +1,18 @@
 import React from 'react';
-import {Switch, Route, Redirect, BrowserRouter} from 'react-router-dom';
-import {publicRoutes, RouteNames} from "./router";
+import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
+import {privateRoutes, publicRoutes, RouteNames} from "./router";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import {log} from "util";
+import {useAuth} from "./hooks/useAuth";
 
 const AppRouter = () => {
     //const {isAuth} = useTypedSelector(state => state.auth);
-    let isAuth  = false;
+    let isAuth  = useAuth();
+    console.log("auth",isAuth)
 
     return (
         isAuth ?
-            <BrowserRouter>
-                <Switch>
-                    {/*{privateRoutes.map(route =>*/}
-                    {/*    <Route path={route.path}*/}
-                    {/*           exact={route.exact}*/}
-                    {/*           component={route.component}*/}
-                    {/*           key={route.path}*/}
-                    {/*    />*/}
-                    {/*)}*/}
-                    {/*<Route  path="/" component={Home} />*/}
-                </Switch>
-            </BrowserRouter>
-
-            :
-            <BrowserRouter>
                 <Switch>
                     {publicRoutes.map(route =>
                         <Route path={route.path}
@@ -31,9 +21,26 @@ const AppRouter = () => {
                                key={route.path}
                         />
                     )}
-                    {/*<Navigate to={RouteNames.LOGIN}/>*/}
+                    {privateRoutes.map(route =>
+                        <Route path={route.path}
+                               exact={route.exact}
+                               component={route.component}
+                               key={route.path}
+                        />
+                    )}
+                    {/*<Redirect to={RouteNames.HOME}/>*/}
                 </Switch>
-            </BrowserRouter>
+            :
+                <Switch>
+                    {publicRoutes.map(route =>
+                        <Route path={route.path}
+                               exact={route.exact}
+                               component={route.component}
+                               key={route.path}
+                        />
+                    )}
+                    <Redirect to={RouteNames.HOME}/>
+                </Switch>
 
     );
 };

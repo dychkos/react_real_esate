@@ -1,42 +1,97 @@
 import React from "react";
 import Button from "./buttons/Button";
 import {useDispatch} from "react-redux";
-import {setShowRegisterModal} from "../store/reducers/modal/action-creator";
+import {setShowLoginModal, setShowRegisterModal} from "../store/reducers/modal/action-creator";
 import InputItem from "./InputItem";
+import {UserActionCreators} from "../store/reducers/user/action-creator";
+import {LoginRequest} from "../api/types";
+import {useForm} from "../hooks/useForm";
+import {useTypedSelector} from "../hooks/useTypedSelector";
+import {useHistory} from "react-router-dom";
+import {RouteNames} from "../router";
+import Loader from "./Loader";
 
 const LoginForm :React.FC = () => {
-    let dispatch = useDispatch();
 
+
+    let dispatch = useDispatch();
+    let loginError = useTypedSelector(state=>state.userReducer.error);
+    let isLoading = useTypedSelector(state=>state.userReducer.isLoading);
+    let router = useHistory();
 
     let openRegisterModalHandler = () =>{
         dispatch(setShowRegisterModal(true));
     }
 
+    let closeLoginModalHandler = () =>{
+        dispatch(setShowLoginModal(false));
+    }
+
+
+    let login = (e: React.FormEvent<HTMLFormElement>,user : LoginRequest) => {
+        e.preventDefault();
+        dispatch(UserActionCreators.login(user));
+        if(!loginError){
+            closeLoginModalHandler();
+            router.push(RouteNames.USER_PROFILE);
+        }
+
+    }
+
+    const { handleSubmit, handleChange, data: user, errors } = useForm<LoginRequest>({
+        validations: {
+            email: {
+                pattern: {
+                    value: '/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/',
+                    message:
+                        "Your email is invalid",
+                },
+            },
+            password: {
+                custom: {
+                    isValid: (value) => value.length > 6,
+                    message: 'The password needs to be at least 6 characters long.',
+                },
+            },
+        },
+        onSubmit: (e) => login(e,user)
+    });
+
+
   return(
-      <form action="" className="login-form">
-          <div className="login-form__item">
-              <InputItem fieldName={"email"} labelText={"Email"} required={true} type={"email"}/>
-          </div>
+      <form onSubmit={handleSubmit} className="login-form">
+          {isLoading
+              ?
+              <Loader/>
+              :
+              <div>
+                  {loginError && <div className="validation-fail">{loginError}</div> }
+                  <div className="login-form__item">
+                      <InputItem fieldName={"email"}  error={errors.email} labelText={"Email"} value={user.email}  onChange={handleChange('email')} required={true} type={"email"}/>
+                  </div>
 
-          <div className="login-form__item">
-              <InputItem fieldName={"password"} labelText={"Password"} required={true} type={"password"}/>
-          </div>
+                  <div className="login-form__item">
+                      <InputItem fieldName={"password"}  error={errors.password} labelText={"Password"} value={user.password} onChange={handleChange('password')}  required={true} type={"password"}/>
+                  </div>
 
-          <div className="login-form__item">
-              <input type="checkbox" name="remember_me" id="remember_me"/>
-              <label htmlFor="remember_me">Remember me</label>
-          </div>
+                  <div className="login-form__item">
+                      <input type="checkbox" name="remember_me" id="remember_me"/>
+                      <label htmlFor="remember_me">Remember me</label>
+                  </div>
 
-          <div className="login-form__footer">
-              <div className="login-form__item">
-                 <Button color={"yellow"} type="submit">
-                     Login
-                 </Button>
+                  <div className="login-form__footer">
+                      <div className="login-form__item">
+                          <Button color={"yellow"} type="submit">
+                              Login
+                          </Button>
+                      </div>
+                      <p>
+                          If you haven`t account please <span className="link" onClick={openRegisterModalHandler}>Register</span>
+                      </p>
+                  </div>
               </div>
-              <p>
-                  If you haven`t account please <span className="link" onClick={openRegisterModalHandler}>Register</span>
-              </p>
-          </div>
+          }
+
       </form>
   )
 }

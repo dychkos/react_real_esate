@@ -3,9 +3,7 @@ import {API_URL} from "../config";
 
 export default class HouseService {
 
-    static url = API_URL+"/api/houses";
-
-    static token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNjg1MjY3NGYwZjkyNGViNWQzNDE0MjU1MWQyOWQxMWJjNTUwOWUwZGQ5NTRkZDhhYTUwYjczZjkwZjA4MDU5YzM1MzIzNzQxZTZkOTE0YzEiLCJpYXQiOjE2Mzc5NDMwMTcuNjUyNDkxLCJuYmYiOjE2Mzc5NDMwMTcuNjUyNDk2LCJleHAiOjE2Njk0NzkwMTcuNjQ3NjIzLCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.Ysrj2PG9idgQR0d-pWdgTi2Zc92STcv6Qy7K2uBPN5bRFJYsxRbGYUjbYdYErlV4c6RNbVANBPb7343880Du6EwV8X-KQ1wQiO0_J9klVd9uwxX8AHj6BnXp4pD8G57bzlHm-G21_QtMIqwgCWWw40y1q39pMUnd1qfYK2ka5a2PBex3Mozrb8vTrB6QdFoo8ICuDqIiKkQCKwnS5lPfJT_n7x7ldk5q_R0SUbDRbWUK1g8-znnkDsB2Kj7-rdnjH6tB_C8Otff-fm5bacjMhHDA4jEk670rWltIKIpphJ0XRbkake1MT7HAHq1qDjbQ4Wi-lgE5qh0jz8VUx72UUyY_8vqVAwjhaebEILUWtTeRlMYac0uB0O6QYGOgAHqlNMrHUuSYOjn9_z62dJEAcwUNJjcNEZ3i8VE5Jq0W0PbZNwj31QbAPS4qLu7kfG2gLPtT12bnCUgrxg1Ag3iiNh_VokQN9tyXAngX7JVqEzGs6zg7R5J6r5lk4Zes3DvayGQkF60JdOySzDYFxMQjMuvPk7rFjzdYfB-T3WDSF2aT3_P2VltA1HG4g7gqZZniJzrbl8zlP8jHsTadsmiE6gvCuEIeX9Ks2rdU2TeV6sHH55hOnzuQ7AtoVWAqy1Z_xyv5UPAfKugAmhEKNtK-f6yeVcFcWrLjyMOY-GJ7Jhk"
+    static url = API_URL+"/houses";
 
     static async getHouses () {
         return new Promise((resolve:(value:IHouse[])=>void,reject)=>{
@@ -68,12 +66,12 @@ export default class HouseService {
 
     static async getUserHouses () {
         return new Promise((resolve:(value:IHouse[])=>void,reject)=>{
-            let url = API_URL + "/api/user/houses";
-            fetch(this.url,{
+            let url = API_URL + "/user/houses";
+            fetch(url,{
                 method:"GET",
                 headers:{
                     "Accept":"application/json",
-                    "Authorization": this.token
+                    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNDZhZDc1Y2I5OTY5NTEyZmNkYTljMGRkMjFiNjZjNTc4MmY1MGQ5Y2M1YzllZDgxNTVkYWIwOWM2YTVlZDY5MWQ5MTMxODAxMGEzNzhkZmIiLCJpYXQiOjE2MzgyMDUzNjEuMzYwNzEyLCJuYmYiOjE2MzgyMDUzNjEuMzYwNzIxLCJleHAiOjE2Njk3NDEzNjEuMzU1NDY0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.fMOlJA9xdENksaxPGgCkv8lXr8kVIYmxqDXQ0NPaCRM8d26-_ycljLILofLW33ubb5uNh_TjnubZn8KAwyp5zCIgKv9HwKpARy1Z0OxWd19aSCIUrv3vkdlPqI275RfzQe1f2FIOwb8uYW6Ij9rnnsYcFqX9W58IghGfuP0R8moS8HR01hHC-FeGla0RrTwu_bA9BxAuB_rmWbzySOj3fDitzXLUwWrGl8c3QuJ57odoap-wbfIGuVsUHmvPLuEzb4rH9dCBM7ksMuPTypHcUBU0iuWLkPaUYcOOpKFYjuoLW-KVjFgvJ0h30PbRGXBQgr6UmlqbO6j3BtDuooCbGHHkVrGCSw23ZcaGjqi6THCXBFOe9addnjAhVubidqs0rBW93fI6pBxYHKHI4DgQdI6WMDDydT8DQZdsDCy9YD296YLLa50ev45wWxk_biV2iSRj7-uHcaxrrIujgCl4fRMOeQQabROwRHVhon_mC1e72dciKW7D-UC04OfyZZgBDKeKYGtnyvJC6BEHRqXsDJMbMuar5Rg6-fKg0XmF2pgprXad3Zu_Zq6jmeMWmbfVFm9wpc4JzjpwZnwK7AlLGH2yjNVrV2Qf7jss9C0E98BTMtaY_orDqk-tsBc11QZlwJ7nxR5ojYqV55yUhMyDy_7FVYi6KJSg_UTX8Vnc4Lw"
                 },
 
             }).then(response=>{

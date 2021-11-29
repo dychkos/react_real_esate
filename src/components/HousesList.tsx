@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "./card/Card";
 import CardImage from "./card/CardImage";
-import Image from "../assets/img/poperty_house1.png";
 import CardTitle from "./card/CardTitle";
 import CardFooter from "./card/CardFooter";
 import BedIcon from "../assets/img/Bed.svg";
@@ -10,7 +9,7 @@ import SizeIcon from "../assets/img/Size.svg";
 import {useHistory} from "react-router-dom";
 import {IHouse} from "../models/IHouse";
 import Loader from "./Loader";
-import {API_URL} from "../config";
+import {API_IMAGE_URL} from "../config";
 
 
 type HousesListProps ={
@@ -27,7 +26,7 @@ const HousesList:React.FC<HousesListProps> = ({houses,isLoading}) =>{
                     return (
                         <div className="col" key={house.id} onClick={()=>router.push(`/houses/${house.id}`)}>
                             <Card>
-                                <CardImage image={API_URL+"/"+house.images[0].filename}/>
+                                <CardImage image={API_IMAGE_URL+house.images[0].filename}/>
                                 <CardTitle>{house.name}</CardTitle>
                                 <CardFooter>
                                     <div className="card__footer-item col">

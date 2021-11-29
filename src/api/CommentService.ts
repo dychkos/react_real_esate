@@ -1,10 +1,9 @@
-import {IHouse} from "../models/IHouse";
 import {API_URL} from "../config";
 import {IComment} from "../models/IComment";
 
 export default class CommentService {
 
-    static url = API_URL+"/api/comments";
+    static url = API_URL+"/comments";
 
     static async getComments () {
         return new Promise((resolve:(value:IComment[])=>void,reject)=>{

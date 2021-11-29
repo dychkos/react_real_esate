@@ -4,13 +4,18 @@ import Button from "./buttons/Button";
 import classNames from "classnames";
 import {useDispatch} from "react-redux";
 import {setShowLoginModal} from "../store/reducers/modal/action-creator";
+import {useHistory} from "react-router-dom";
+import {RouteNames} from "../router";
+import {useAuth} from "../hooks/useAuth";
+import {UserActionCreators} from "../store/reducers/user/action-creator";
 
 
-let auth = true;
 
 const Header:React.FC = (props) =>{
 
     let dispatch = useDispatch();
+    let router = useHistory();
+    let auth = useAuth();
 
     let [burgerOpen,setBurgerOpen] = React.useState<Boolean>(false);
 
@@ -22,12 +27,14 @@ const Header:React.FC = (props) =>{
         dispatch(setShowLoginModal(true));
     }
 
-    console.log(burgerOpen)
+    let logout = () =>{
+        dispatch(UserActionCreators.logout());
+    }
 
     return <header className="header">
         <div className="container">
             <div className="logo">
-                <a href="/"> <img src={Logo} alt="logo"/></a>
+                <a onClick={()=>router.push(RouteNames.HOME)}> <img src={Logo} alt="logo"/></a>
             </div>
             <div className={classNames("header__nav", {
                 open: burgerOpen
@@ -35,16 +42,17 @@ const Header:React.FC = (props) =>{
                 <ul className="nav">
                     <li className="nav__item">
                         <div className="header__mobile-logo logo">
-                            <a href="/"> <img src={Logo} alt="logo"/></a>
+                            <a onClick={()=>router.push(RouteNames.HOME)}> <img src={Logo} alt="logo"/></a>
                         </div>
                     </li>
+                    {auth && <li onClick={logout} className="nav__item">Logout</li> }
                     {/*<li className="nav__item"><a href="#">Nav link</a></li>*/}
                     <li className="nav__item nav__item_absolute">
 
                         {
                             auth ?
-                                <Button color={"yellow"} onClick={openLoginModalHandler}>
-                                    Learn More
+                                <Button color={"yellow"} onClick={()=>router.push(RouteNames.USER_PROFILE)}>
+                                    Profile
                                 </Button>
                                 :
                                 <Button color={"yellow"} onClick={openLoginModalHandler}>

@@ -3,7 +3,6 @@ import {IHouse} from "../models/IHouse";
 import {Swiper, SwiperSlide} from "swiper/react";
 import Card from "./card/Card";
 import CardImage from "./card/CardImage";
-import Image from "../assets/img/poperty_house1.png";
 import CardTitle from "./card/CardTitle";
 import CardFooter from "./card/CardFooter";
 import BedIcon from "../assets/img/Bed.svg";
@@ -11,7 +10,7 @@ import ShowerIcon from "../assets/img/Shower.svg";
 import SizeIcon from "../assets/img/Size.svg";
 import {useHistory} from "react-router-dom";
 import Loader from "./Loader";
-import {API_URL} from "../config";
+import {API_IMAGE_URL} from "../config";
 
 type SimilarProps = {
     houses:IHouse[],
@@ -48,7 +47,7 @@ const Similar:React.FC<SimilarProps> = ({houses,isLoading}) =>{
                                         <SwiperSlide key={house.id}>
                                             <div className="col" onClick={()=>router.push(`/houses/${house.id}`)}>
                                                 <Card>
-                                                    <CardImage image={API_URL+"/"+house.images[0].filename}/>
+                                                    <CardImage image={API_IMAGE_URL+house.images[0].filename}/>
                                                     <CardTitle>{house.name}</CardTitle>
                                                     <CardFooter>
                                                         <div className="card__footer-item col">

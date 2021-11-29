@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import PageHeader from "../components/PageHeader";
 import CardTitle from "../components/card/CardTitle";
 import Card from "../components/card/Card";
@@ -7,7 +7,7 @@ import Button from "../components/buttons/Button";
 import {useHistory} from "react-router-dom";
 import CardImage from "../components/card/CardImage";
 import {useTypedSelector} from "../hooks/useTypedSelector";
-import {API_URL} from "../config";
+import {API_IMAGE_URL} from "../config";
 import BedIcon from "../assets/img/Bed.svg";
 import ShowerIcon from "../assets/img/Shower.svg";
 import SizeIcon from "../assets/img/Size.svg";
@@ -26,7 +26,7 @@ const UserProfile = () =>{
     let isHousesLoading = useTypedSelector(state=>state.housesListReducer.isLoading);
     React.useEffect(()=>{
         dispatch(HousesListActionCreators.fetchHousesListForUser());
-    },[])
+    },[dispatch])
 
     return(
         <div>
@@ -53,32 +53,34 @@ const UserProfile = () =>{
                                         <Loader/>
                                         :
                                         <div>
-                                            {houses.map(
-                                                house=>{
-                                                    return (
-                                                        <div className="houses__house col" onClick={()=>router.push(`/houses/${house.id}`)}>
-                                                            <Card>
-                                                                <CardImage image={API_URL+"/"+house.images[0].filename}/>
-                                                                <CardTitle>{house.name}</CardTitle>
-                                                                <CardFooter>
-                                                                    <div className="card__footer-item col">
-                                                                        <img src={BedIcon} alt="Bed"/>
-                                                                        <span className="card__footer-info">{house.bedrooms_count}</span>
-                                                                    </div>
-                                                                    <div className="card__footer-item col ">
-                                                                        <img src={ShowerIcon} alt="Shower"/>
-                                                                        <span className="card__footer-info">{house.showers_count}</span>
-                                                                    </div>
-                                                                    <div className="card__footer-item col">
-                                                                        <img src={SizeIcon} alt="Size"/>
-                                                                        <span className="card__footer-info">{house.floors_count}</span>
-                                                                    </div>
-                                                                </CardFooter>
-                                                            </Card>
-                                                        </div>
-                                                    )
-                                                }
-                                            )}
+                                            {houses
+                                                && houses.map(
+                                                    house=>{
+                                                        return (
+                                                            <div className="houses__house col" onClick={()=>router.push(`/houses/${house.id}`)}>
+                                                                <Card>
+                                                                    <CardImage image={API_IMAGE_URL+house.images[0].filename}/>
+                                                                    <CardTitle>{house.name}</CardTitle>
+                                                                    <CardFooter>
+                                                                        <div className="card__footer-item col">
+                                                                            <img src={BedIcon} alt="Bed"/>
+                                                                            <span className="card__footer-info">{house.bedrooms_count}</span>
+                                                                        </div>
+                                                                        <div className="card__footer-item col ">
+                                                                            <img src={ShowerIcon} alt="Shower"/>
+                                                                            <span className="card__footer-info">{house.showers_count}</span>
+                                                                        </div>
+                                                                        <div className="card__footer-item col">
+                                                                            <img src={SizeIcon} alt="Size"/>
+                                                                            <span className="card__footer-info">{house.floors_count}</span>
+                                                                        </div>
+                                                                    </CardFooter>
+                                                                </Card>
+                                                            </div>
+                                                        )
+                                                    }
+                                                )
+                                            }
                                         </div>
                                     }
                                 </div>

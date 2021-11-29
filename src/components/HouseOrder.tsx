@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./buttons/Button";
 import {IUser} from "../models/IUser";
-import {API_URL} from "../config";
+import {API_IMAGE_URL} from "../config";
 import InputItem from "./InputItem";
 import DefaultUserIcon from "../assets/img/default_user.png";
 
@@ -15,7 +15,7 @@ const HouseOrder:React.FC<HouseOrderProps> = ({user,onSubmit}) =>{
         <form className="house__order" onSubmit={onSubmit}>
             <div className="house__order-author author">
                 <div className="author__icon">
-                  <img src={user.image ? API_URL+"/"+user.image.filename : DefaultUserIcon } alt="User Icon"/>
+                  <img src={user.image ? API_IMAGE_URL+user.image.filename : DefaultUserIcon } alt="User Icon"/>
                 </div>
                 <div className="author__info">
                     <div className="author__name author__name-thin">

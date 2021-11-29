@@ -26,7 +26,7 @@ const Listings:React.FC = () =>{
 
     React.useEffect(()=>{
         dispatch(HousesListActionCreators.fetchHousesList());
-    },[])
+    },[dispatch])
 
     return(
         <section className="listings">

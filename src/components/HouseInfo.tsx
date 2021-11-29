@@ -1,6 +1,6 @@
 import React from 'react';
 import {IHouse} from "../models/IHouse";
-import {API_URL} from "../config";
+import {API_IMAGE_URL} from "../config";
 import CheckImage from "../assets/img/check.svg";
 import BedImage from "../assets/img/Bed.svg"
 import ShowerImage from "../assets/img/Shower.svg"
@@ -21,7 +21,7 @@ type HouseInfoProps ={
 
 const HouseInfo:React.FC<HouseInfoProps> = ({house}) => {
 
-    let previewImage = API_URL+"/"+ house.images[0].filename;
+    let previewImage = API_IMAGE_URL + house.images[0].filename;
 
     let [chosenPhoto,setChosenPhoto] = React.useState<string>(previewImage);
 
@@ -34,7 +34,7 @@ const HouseInfo:React.FC<HouseInfoProps> = ({house}) => {
             <div className="house__preview">
                 <div className="row">
                     <div className="house__photo house__photo_big">
-                        <img id="house-preview" src={chosenPhoto} alt="HousePage Photo"/>
+                        <img id="house-preview" src={chosenPhoto} alt="HousePage"/>
                     </div>
                 </div>
                 <div className="row">
@@ -44,10 +44,10 @@ const HouseInfo:React.FC<HouseInfoProps> = ({house}) => {
                                 <div className="col" key={image.id}>
                                     <div className="house__photo house__photo_small">
                                         <img
-                                            className={classNames({active:API_URL+"/"+image.filename === chosenPhoto})}
-                                            src={API_URL+"/"+image.filename}
-                                            onClick={()=>{ choosePhotoHandler(API_URL+"/"+image.filename)} }
-                                            alt="HousePage Photo"/>
+                                            className={classNames({active:API_IMAGE_URL+image.filename === chosenPhoto})}
+                                            src={API_IMAGE_URL+image.filename}
+                                            onClick={()=>{ choosePhotoHandler(API_IMAGE_URL+image.filename)} }
+                                            alt="HousePage"/>
                                     </div>
                                 </div>
                             )
@@ -64,7 +64,6 @@ const HouseInfo:React.FC<HouseInfoProps> = ({house}) => {
                             <img src={BedImage} alt="Bed"/>
                             <span className="card__footer-info">{house.bedrooms_count}</span>
                         </div>
-
                         <div className="card__footer-item col">
                             <img src={ShowerImage} alt="Shower"/>
                             <span className="card__footer-info">{house.showers_count}</span>
@@ -94,7 +93,10 @@ const HouseInfo:React.FC<HouseInfoProps> = ({house}) => {
                     </PaperBody>
                 </Paper>
             </div>
-            <div className="house__features">
+            {
+                house.features.length > 0
+                &&
+                <div className="house__features">
                 <Paper>
                     <PaperTitle>
                         Features
@@ -117,6 +119,8 @@ const HouseInfo:React.FC<HouseInfoProps> = ({house}) => {
                     </PaperBody>
                 </Paper>
             </div>
+            }
+
         </div>
     );
 };

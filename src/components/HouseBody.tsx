@@ -2,7 +2,6 @@ import React from "react";
 import HouseInfo from "./HouseInfo";
 import HouseOrder from "./HouseOrder";
 import {IHouse} from "../models/IHouse";
-import {useDispatch} from "react-redux";
 
 
 type HouseBodyProps = {
@@ -10,7 +9,6 @@ type HouseBodyProps = {
 }
 
 const HouseBody:React.FC<HouseBodyProps> = ({house}) =>{
-    let dispatch = useDispatch();
     return(
         <section className="house">
             <div className="container">

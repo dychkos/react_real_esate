@@ -4,7 +4,7 @@ import SwiperCore, { Navigation } from "swiper";
 import Arrow from "../assets/img/arrow_down.svg"
 import 'swiper/swiper.scss';
 import {IComment} from "../models/IComment";
-import {API_URL} from "../config";
+import {API_IMAGE_URL} from "../config";
 import DefaultUserIcon from "../assets/img/default_user.png";
 
 SwiperCore.use([Navigation]);
@@ -55,7 +55,7 @@ const CommentsSwiper:React.FC<commentsSwiperProps> = ({comments}) => {
                             </h4>
                             <div className="comment__author author">
                                 <div className="author__icon">
-                                    <img src={comment.image ? API_URL+"/"+comment.image.filename : DefaultUserIcon} alt="User Icon"/>
+                                    <img src={comment.image ? API_IMAGE_URL+comment.image.filename : DefaultUserIcon} alt="User Icon"/>
                                 </div>
                                 <div className="author__info">
                                     <div className="author__name">
