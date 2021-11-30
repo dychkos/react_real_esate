@@ -24,10 +24,15 @@ const HousePage:React.FC = () =>{
     },[params.id,dispatch]);
 
     let house = useTypedSelector(state=>state.houseReducer.house);
+    let user = useTypedSelector(state=>state.userReducer.user);
     let similarHouses = useTypedSelector(state=>state.housesListReducer.houses);
 
     let isHouseLoading = useTypedSelector(state=>state.houseReducer.isLoading);
     let isSimilarHouseLoading = useTypedSelector(state=>state.housesListReducer.isLoading);
+
+    let canEdit = () =>{
+        return house?.user.id === user.id;
+    }
 
 
     return(
@@ -43,7 +48,7 @@ const HousePage:React.FC = () =>{
                         </div>
                     </PageHeader>
 
-                    <HouseBody house={house}/>
+                    <HouseBody house={house} canEdit={canEdit()} />
 
                     <Similar houses={similarHouses} isLoading={isSimilarHouseLoading}/>
                 </div>

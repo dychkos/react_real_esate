@@ -16,7 +16,7 @@ export const HousesListActionCreators = {
     setHousesListLoading: (payload: boolean): SetHousesListLoading => ({type: HousesListActionTypes.SET_HOUSES_LIST_LOADING, payload}),
     sortHousesList: (payload: SortPayload): SortHousesList => ({type: HousesListActionTypes.SORT_HOUSES_LIST, payload}),
     setHousesListError: (payload: string): SetHousesListError => ({type: HousesListActionTypes.SET_HOUSES_LIST_ERROR, payload}),
-    fetchHousesList :()=>async (dispatch:AppDispatch)=>{
+    fetchHousesList :() => async (dispatch:AppDispatch)=>{
         dispatch(HousesListActionCreators.setHousesListLoading(true));
         try {
             let houses = await HouseService.getHouses();

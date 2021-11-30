@@ -7,17 +7,18 @@ import {UserActionCreators} from "../store/reducers/user/action-creator";
 import {LoginRequest} from "../api/types";
 import {useForm} from "../hooks/useForm";
 import {useTypedSelector} from "../hooks/useTypedSelector";
-import {useHistory} from "react-router-dom";
-import {RouteNames} from "../router";
 import Loader from "./Loader";
 
 const LoginForm :React.FC = () => {
 
-
     let dispatch = useDispatch();
     let loginError = useTypedSelector(state=>state.userReducer.error);
     let isLoading = useTypedSelector(state=>state.userReducer.isLoading);
-    let router = useHistory();
+    let auth = useTypedSelector(state=>state.userReducer.isAuth);
+
+    React.useEffect(()=>{
+        closeLoginModalHandler();
+    },[auth])
 
     let openRegisterModalHandler = () =>{
         dispatch(setShowRegisterModal(true));
@@ -27,15 +28,8 @@ const LoginForm :React.FC = () => {
         dispatch(setShowLoginModal(false));
     }
 
-
-    let login = (e: React.FormEvent<HTMLFormElement>,user : LoginRequest) => {
-        e.preventDefault();
+    let login = (user : LoginRequest) => {
         dispatch(UserActionCreators.login(user));
-        if(!loginError){
-            closeLoginModalHandler();
-            router.push(RouteNames.USER_PROFILE);
-        }
-
     }
 
     const { handleSubmit, handleChange, data: user, errors } = useForm<LoginRequest>({
@@ -54,9 +48,8 @@ const LoginForm :React.FC = () => {
                 },
             },
         },
-        onSubmit: (e) => login(e,user)
+        onSubmit: (e) => login(user)
     });
-
 
   return(
       <form onSubmit={handleSubmit} className="login-form">
@@ -67,11 +60,11 @@ const LoginForm :React.FC = () => {
               <div>
                   {loginError && <div className="validation-fail">{loginError}</div> }
                   <div className="login-form__item">
-                      <InputItem fieldName={"email"}  error={errors.email} labelText={"Email"} value={user.email}  onChange={handleChange('email')} required={true} type={"email"}/>
+                      <InputItem fieldName={"email"}  error={errors.email} labelText={"Email"} value={user.email || ""}  onChange={handleChange('email')} required={true} type={"email"}/>
                   </div>
 
                   <div className="login-form__item">
-                      <InputItem fieldName={"password"}  error={errors.password} labelText={"Password"} value={user.password} onChange={handleChange('password')}  required={true} type={"password"}/>
+                      <InputItem fieldName={"password"}  error={errors.password} labelText={"Password"} value={user.password || ""} onChange={handleChange('password')}  required={true} type={"password"}/>
                   </div>
 
                   <div className="login-form__item">

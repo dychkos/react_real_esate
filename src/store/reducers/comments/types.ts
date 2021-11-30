@@ -8,12 +8,18 @@ export interface CommentsReducerState {
 
 export enum CommentsActionTypes {
     SET_COMMENTS = "SET_COMMENTS",
+    ADD_COMMENT = "ADD_COMMENT",
     SET_COMMENTS_LOADING = "SET_COMMENTS_LOADING",
     SET_COMMENTS_ERROR = "SET_COMMENTS_ERROR"
 }
 
 export interface SetComments {
     type: CommentsActionTypes.SET_COMMENTS;
+    payload: IComment[];
+}
+
+export interface AddComment {
+    type: CommentsActionTypes.ADD_COMMENT;
     payload: IComment[];
 }
 

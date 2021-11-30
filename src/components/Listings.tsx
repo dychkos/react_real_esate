@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {HousesListActionCreators} from "../store/reducers/houses-list/action-creator";
 import {HouseListFilters} from "../store/reducers/houses-list/types";
+import Loader from "./Loader";
 
 
 const Listings:React.FC = () =>{
@@ -43,7 +44,7 @@ const Listings:React.FC = () =>{
                    <Dropdown action={filterAction.sortByPrice} options={[{id:1,value:false,title:"Expensive first"},{id:2,value:false,title:"Cheap first"}]} placeholder={"Price"}/>
                    <Dropdown action={filterAction.sortByPrice} options={[{id:1,value:false,title:"Expensive first"},{id:2,value:false,title:"Cheap first"}]} placeholder={"Price"}/>
                </DropdownGroup>
-               <HousesList isLoading={isHousesLoading} houses={houses}/>
+                { isHousesLoading ? <Loader/> : <HousesList houses={houses}/>}
             </div>
         </section>
     )

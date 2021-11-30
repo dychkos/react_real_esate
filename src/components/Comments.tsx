@@ -15,7 +15,7 @@ const Comments:React.FC = (props) =>{
 
     React.useEffect(()=>{
         dispatch(CommentsActionCreators.fetchComments());
-    },[])
+    },[dispatch])
 
     return(
         <section className="comments">

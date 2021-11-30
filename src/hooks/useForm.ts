@@ -10,7 +10,8 @@ interface Validation {
         message: string;
     };
     custom?: {
-        isValid: (value: string) => boolean;
+        isValid?: (value: string) => boolean;
+        likeAs?: string;
         message: string;
     };
 }
@@ -31,7 +32,7 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
     const handleChange = <S extends unknown>(
         key: keyof T,
         sanitizeFn?: (value: string) => S
-    ) => (e: ChangeEvent<HTMLInputElement & HTMLSelectElement>) => {
+    ) => (e: ChangeEvent<HTMLInputElement & HTMLSelectElement & HTMLTextAreaElement>) => {
         const value = sanitizeFn ? sanitizeFn(e.target.value) : e.target.value;
         setData({
             ...data,
@@ -63,6 +64,12 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
                 if (custom?.isValid && !custom.isValid(value)) {
                     valid = false;
                     newErrors[key] = custom.message;
+                }else {
+                    // @ts-ignore
+                    if(custom?.likeAs && value !== data[custom.likeAs]){
+                      valid = false;
+                      newErrors[key] = custom.message;
+                    }
                 }
             }
 

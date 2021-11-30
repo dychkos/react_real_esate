@@ -16,7 +16,7 @@ const housesListReducer= (state = initialState, action:HousesListAction) : House
             return {...state,isLoading:action.payload}
         }
         case HousesListActionTypes.SET_HOUSES_LIST_ERROR:{
-            return {...state,error:action.payload}
+            return {...state,error:action.payload,houses:[]}
         }
         case HousesListActionTypes.SORT_HOUSES_LIST:{
             let houses = [...state.houses];
@@ -27,7 +27,6 @@ const housesListReducer= (state = initialState, action:HousesListAction) : House
                     return (b[action.payload.option] - a[action.payload.option]);
                 }
             });
-            console.log(sorted)
             return {...state,houses:sorted}
         }
         default:

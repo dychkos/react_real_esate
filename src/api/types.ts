@@ -12,6 +12,12 @@ export interface LoginRequest {
     password:string
 }
 
+export interface AddCommentRequest {
+    author_name:string,
+    author_message:string,
+    author_image:File,
+}
+
 export interface LoginResponse{
     data:IUser,
     message:string,
@@ -19,4 +25,11 @@ export interface LoginResponse{
     token:string,
     token_type?:string
 }
+
+
+export interface CheckAuthResponse{
+    user:IUser,
+    auth:boolean,
+}
+
 

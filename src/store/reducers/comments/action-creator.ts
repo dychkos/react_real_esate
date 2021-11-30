@@ -1,4 +1,4 @@
-import {AppDispatch} from "../../index";
+import {AppDispatch, RootState} from "../../index";
 
 import {
     CommentsActionTypes,
@@ -9,6 +9,7 @@ import {
 
 import {IComment} from "../../../models/IComment";
 import CommentService from "../../../api/CommentService";
+import {AddCommentRequest} from "../../../api/types";
 
 
 export const CommentsActionCreators = {
@@ -21,7 +22,19 @@ export const CommentsActionCreators = {
             let houses = await CommentService.getComments();
             dispatch(CommentsActionCreators.setComments(houses));
         }catch (e) {
-            dispatch(CommentsActionCreators.setCommentsError("House loading error"));
+            dispatch(CommentsActionCreators.setCommentsError("Comments loading error"));
+        }finally {
+            dispatch(CommentsActionCreators.setCommentsLoading(false));
+        }
+    },
+    addComment :(comment:AddCommentRequest)=>async (dispatch:AppDispatch,state:RootState)=>{
+        dispatch(CommentsActionCreators.setCommentsLoading(true));
+        try {
+            let result = await CommentService.addComment(comment);
+            console.log(result)
+            //dispatch(CommentsActionCreators.setComments(...state.commentsReducer.comments,result));
+        }catch (e) {
+            dispatch(CommentsActionCreators.setCommentsError("Comments adding error"));
         }finally {
             dispatch(CommentsActionCreators.setCommentsLoading(false));
         }

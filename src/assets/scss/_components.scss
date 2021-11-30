@@ -27,6 +27,72 @@
 	height: 100%;
 }
 
+.logo{
+	cursor: pointer;
+}
+.drag{
+	&__container{
+		display: flex;
+		flex-direction: column;
+		background: #fff;
+		border-radius: 20px;
+		text-align: center;
+		p {
+			margin-top: -10px;
+			color: #777;
+		}
+	}
+	&__upload{
+		display: grid;
+		margin-top: 10px;
+		place-items: center;
+		border: 1px dashed $yellow;
+		position: relative;
+		width: 100%;
+		background: #FBFBFF;
+		border-radius: 20px;
+		.image-upload {
+			display: flex;
+			flex-wrap:wrap;
+			label {
+				cursor: pointer;
+
+				:hover {
+					opacity: .8;
+				}
+			}
+			>input {
+				display: none;
+			}
+		}
+	}
+	&__preview{
+		position: relative;
+		/* cursor: pointer; */
+		#uploaded-image{
+			height: 150px;
+			width: 150px;
+			object-fit: cover;
+			border-radius: 20px;
+		}
+		.close-icon{
+			background: #000;
+			border-radius: 5px;
+			opacity: .8;
+			position: absolute;
+			z-index: 10;
+			right: 15px;
+			top: 20px;
+			cursor: pointer;
+			:hover {
+				opacity: 1;
+			}
+		}
+	}
+
+}
+
+
 
 @media only screen and (max-width: 767px) {
 	.btn{

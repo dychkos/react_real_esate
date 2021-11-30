@@ -6,16 +6,32 @@ import Footer from "./components/Footer";
 import Modal from "./components/modal/Modal";
 import AppRouter from "./AppRouter";
 import {BrowserRouter} from "react-router-dom";
+import {useTypedSelector} from "./hooks/useTypedSelector";
+import Loader from "./components/Loader";
+import {useDispatch} from "react-redux";
+import AppActionCreators from "./store/reducers/app/action-creator";
 
 function App() {
+
+    const isInitialized = useTypedSelector(state=>state.appReducer.initialized);
+    const dispatch = useDispatch();
+
+    React.useEffect(()=>{
+        dispatch(AppActionCreators.checkAuth())
+    })
+
   return (
     <div className="App">
-        <BrowserRouter>
-            <Header/>
-            <AppRouter/>
-            <Footer/>
-            <Modal/>
-        </BrowserRouter>
+        {isInitialized
+            ?
+            <BrowserRouter>
+                <Header/>
+                <AppRouter/>
+                <Footer/>
+                <Modal/>
+            </BrowserRouter>
+        : <Loader fullSize={true}/>
+        }
     </div>
   );
 }

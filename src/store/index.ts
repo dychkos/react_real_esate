@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from 'redux-thunk';
-import reducers from './reducers';
+import reducers from './reducers/index';
 
 
 declare global {

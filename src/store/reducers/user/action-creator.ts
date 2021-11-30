@@ -1,21 +1,28 @@
 import {IUser} from "../../../models/IUser";
-import {SetUser, SetUserError, SetUserLoading, UserActionTypes} from "./types";
+import {SetAuth, SetUser, SetUserError, SetUserLoading, UserActionTypes} from "./types";
 import {LoginRequest, RegisterRequest} from "../../../api/types";
 import {AppDispatch} from "../../index";
 import UserService from "../../../api/UserService";
 
 export const UserActionCreators = {
     setUser : (payload : Awaited<Promise<IUser>>):SetUser =>({type:UserActionTypes.SET_USER,payload}),
+    setAuth : (payload:boolean):SetAuth =>({type:UserActionTypes.SET_AUTH,payload}),
     setUserLoading : (payload : boolean):SetUserLoading =>({type:UserActionTypes.SET_USER_LOADING,payload}),
     setUserError : (payload : string):SetUserError =>({type:UserActionTypes.SET_USER_ERROR,payload}),
     register:(user:RegisterRequest) => async (dispatch:AppDispatch)=>{
-        UserActionCreators.setUserLoading(true);
+        dispatch(UserActionCreators.setUserLoading(true));
         try {
-            let result = await UserService.register(user);
+           let result = await UserService.register(user);
+           if(result){
+               let result = await UserService.login(user);
+               localStorage.setItem("token",result.token);
+               dispatch(UserActionCreators.setUser(result.data));
+               dispatch(UserActionCreators.setAuth(true));
+           }
         }catch (e){
-            UserActionCreators.setUserError("Registration Error")
+            dispatch(UserActionCreators.setUserError("Registration error"));
         }finally {
-            UserActionCreators.setUserLoading(false);
+            dispatch(UserActionCreators.setUserLoading(false));
         }
     },
     login:(user:LoginRequest) => async (dispatch:AppDispatch)=>{
@@ -24,6 +31,7 @@ export const UserActionCreators = {
             let result = await UserService.login(user);
             localStorage.setItem("token",result.token);
             dispatch(UserActionCreators.setUser(result.data));
+            dispatch(UserActionCreators.setAuth(true));
         }catch (error){
             dispatch(UserActionCreators.setUserError(error as string));
         }finally {
@@ -36,12 +44,14 @@ export const UserActionCreators = {
             await UserService.logout();
             localStorage.removeItem("token");
             dispatch(UserActionCreators.setUser({} as IUser));
+            dispatch(UserActionCreators.setAuth(false));
         }catch (error){
             dispatch(UserActionCreators.setUserError(error as string));
         }finally {
             dispatch(UserActionCreators.setUserLoading(false));
         }
-    }
+    },
+
 
 
 

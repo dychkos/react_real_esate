@@ -8,21 +8,19 @@ import ShowerIcon from "../assets/img/Shower.svg";
 import SizeIcon from "../assets/img/Size.svg";
 import {useHistory} from "react-router-dom";
 import {IHouse} from "../models/IHouse";
-import Loader from "./Loader";
 import {API_IMAGE_URL} from "../config";
 
 
 type HousesListProps ={
-    houses:IHouse[],
-    isLoading:boolean
+    houses:IHouse[]
 }
 
-const HousesList:React.FC<HousesListProps> = ({houses,isLoading}) =>{
+const HousesList:React.FC<HousesListProps> = ({houses}) =>{
     const router = useHistory();
     return(
         <div className="listings__cards cards">
             <div className="cards__body row row-cols-1 row-cols-sm-2 row-cols-md-3">
-                {isLoading ? <Loader/> : houses.map(house=>{
+                {houses.map(house=>{
                     return (
                         <div className="col" key={house.id} onClick={()=>router.push(`/houses/${house.id}`)}>
                             <Card>

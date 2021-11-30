@@ -1,13 +1,15 @@
 import {IUser} from "../../../models/IUser";
 
 export interface UserReducerState {
-    user:IUser,
-    isLoading:boolean,
-    error:string
+    user : IUser,
+    isAuth : boolean
+    isLoading : boolean,
+    error : string
 }
 
 export enum UserActionTypes{
     SET_USER = "SET_USER",
+    SET_AUTH = "SET_AUTH",
     SET_USER_LOADING = "SET_USER_LOADING",
     SET_USER_ERROR = "SET_USER_ERROR"
 }
@@ -15,6 +17,11 @@ export enum UserActionTypes{
 export interface SetUser {
     type:UserActionTypes.SET_USER,
     payload:IUser
+}
+
+export interface SetAuth {
+    type:UserActionTypes.SET_AUTH,
+    payload:boolean
 }
 
 export interface SetUserLoading {
@@ -29,5 +36,6 @@ export interface SetUserError {
 
 export type UserAction =
     SetUser |
+    SetAuth |
     SetUserError |
     SetUserLoading

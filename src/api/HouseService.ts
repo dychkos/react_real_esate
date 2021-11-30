@@ -33,7 +33,7 @@ export default class HouseService {
                     "Accept":"application/json"
                 }
             }).then(response=>{
-                if (!response.ok && response.status === 404){
+                if (!response.ok){
                     reject("House loading error")
                 }else {
                     response.json().then(
@@ -53,7 +53,7 @@ export default class HouseService {
                     "Accept":"application/json"
                 }
             }).then(response=>{
-                if (!response.ok && response.status === 404){
+                if (!response.ok){
                     reject("Houses loading error")
                 }else {
                     response.json().then(
@@ -71,11 +71,11 @@ export default class HouseService {
                 method:"GET",
                 headers:{
                     "Accept":"application/json",
-                    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNDZhZDc1Y2I5OTY5NTEyZmNkYTljMGRkMjFiNjZjNTc4MmY1MGQ5Y2M1YzllZDgxNTVkYWIwOWM2YTVlZDY5MWQ5MTMxODAxMGEzNzhkZmIiLCJpYXQiOjE2MzgyMDUzNjEuMzYwNzEyLCJuYmYiOjE2MzgyMDUzNjEuMzYwNzIxLCJleHAiOjE2Njk3NDEzNjEuMzU1NDY0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.fMOlJA9xdENksaxPGgCkv8lXr8kVIYmxqDXQ0NPaCRM8d26-_ycljLILofLW33ubb5uNh_TjnubZn8KAwyp5zCIgKv9HwKpARy1Z0OxWd19aSCIUrv3vkdlPqI275RfzQe1f2FIOwb8uYW6Ij9rnnsYcFqX9W58IghGfuP0R8moS8HR01hHC-FeGla0RrTwu_bA9BxAuB_rmWbzySOj3fDitzXLUwWrGl8c3QuJ57odoap-wbfIGuVsUHmvPLuEzb4rH9dCBM7ksMuPTypHcUBU0iuWLkPaUYcOOpKFYjuoLW-KVjFgvJ0h30PbRGXBQgr6UmlqbO6j3BtDuooCbGHHkVrGCSw23ZcaGjqi6THCXBFOe9addnjAhVubidqs0rBW93fI6pBxYHKHI4DgQdI6WMDDydT8DQZdsDCy9YD296YLLa50ev45wWxk_biV2iSRj7-uHcaxrrIujgCl4fRMOeQQabROwRHVhon_mC1e72dciKW7D-UC04OfyZZgBDKeKYGtnyvJC6BEHRqXsDJMbMuar5Rg6-fKg0XmF2pgprXad3Zu_Zq6jmeMWmbfVFm9wpc4JzjpwZnwK7AlLGH2yjNVrV2Qf7jss9C0E98BTMtaY_orDqk-tsBc11QZlwJ7nxR5ojYqV55yUhMyDy_7FVYi6KJSg_UTX8Vnc4Lw"
+                    "Authorization": "Bearer " + localStorage.getItem("token")
                 },
 
             }).then(response=>{
-                if (!response.ok && response.status === 404){
+                if (!response.ok){
                     reject("Houses loading error")
                 }else {
                     response.json().then(

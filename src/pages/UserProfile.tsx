@@ -5,25 +5,20 @@ import Card from "../components/card/Card";
 import CardFooter from "../components/card/CardFooter";
 import Button from "../components/buttons/Button";
 import {useHistory} from "react-router-dom";
-import CardImage from "../components/card/CardImage";
 import {useTypedSelector} from "../hooks/useTypedSelector";
-import {API_IMAGE_URL} from "../config";
-import BedIcon from "../assets/img/Bed.svg";
-import ShowerIcon from "../assets/img/Shower.svg";
-import SizeIcon from "../assets/img/Size.svg";
 import {useDispatch} from "react-redux";
 import {HousesListActionCreators} from "../store/reducers/houses-list/action-creator";
 import Loader from "../components/Loader";
-
-
-
+import HouseItem from "../components/HouseItem";
+import UserSidebar from "../components/UserSidebar";
 
 const UserProfile = () =>{
 
     let router = useHistory();
     let dispatch = useDispatch();
-    let houses = useTypedSelector(state=>state.housesListReducer.houses);
-    let isHousesLoading = useTypedSelector(state=>state.housesListReducer.isLoading);
+    let {houses,isLoading : isHousesLoading} = useTypedSelector(state=>state.housesListReducer);
+    let {user,isLoading : isUserLaoding} = useTypedSelector(state=>state.userReducer);
+
     React.useEffect(()=>{
         dispatch(HousesListActionCreators.fetchHousesListForUser());
     },[dispatch])
@@ -57,25 +52,8 @@ const UserProfile = () =>{
                                                 && houses.map(
                                                     house=>{
                                                         return (
-                                                            <div className="houses__house col" onClick={()=>router.push(`/houses/${house.id}`)}>
-                                                                <Card>
-                                                                    <CardImage image={API_IMAGE_URL+house.images[0].filename}/>
-                                                                    <CardTitle>{house.name}</CardTitle>
-                                                                    <CardFooter>
-                                                                        <div className="card__footer-item col">
-                                                                            <img src={BedIcon} alt="Bed"/>
-                                                                            <span className="card__footer-info">{house.bedrooms_count}</span>
-                                                                        </div>
-                                                                        <div className="card__footer-item col ">
-                                                                            <img src={ShowerIcon} alt="Shower"/>
-                                                                            <span className="card__footer-info">{house.showers_count}</span>
-                                                                        </div>
-                                                                        <div className="card__footer-item col">
-                                                                            <img src={SizeIcon} alt="Size"/>
-                                                                            <span className="card__footer-info">{house.floors_count}</span>
-                                                                        </div>
-                                                                    </CardFooter>
-                                                                </Card>
+                                                            <div className="houses__house col" key={house.id} onClick={()=>router.push(`/houses/${house.id}`)}>
+                                                                <HouseItem house={house}/>
                                                             </div>
                                                         )
                                                     }
@@ -85,6 +63,9 @@ const UserProfile = () =>{
                                     }
                                 </div>
                             </div>
+                        </div>
+                        <div className="col-xl-4">
+                            {isUserLaoding ? <Loader/> :<UserSidebar user={user} />}
                         </div>
                     </div>
                 </div>

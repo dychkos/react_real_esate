@@ -1,6 +1,6 @@
 import {API_URL} from "../config";
 import {IUser} from "../models/IUser";
-import {LoginRequest, LoginResponse, RegisterRequest} from "./types";
+import {CheckAuthResponse, LoginRequest, LoginResponse, RegisterRequest} from "./types";
 
 
 
@@ -23,7 +23,7 @@ export default class UserService {
                 },
                 body:formData
             }).then(response=>{
-                if (!response.ok && response.status === 404){
+                if (!response.ok){
                     reject("Registration error")
                 }else {
                     response.json().then(
@@ -67,9 +67,8 @@ export default class UserService {
                 method:"GET",
                 headers:{
                     "Accept":"application/json",
-                    "Authorization": "Bearer" + localStorage.getItem("token")
+                    "Authorization": "Bearer " + localStorage.getItem("token")
                 },
-
             }).then(response=>{
                 if(!response.ok){
                     response.json().then(data => reject(data.message));
@@ -79,6 +78,25 @@ export default class UserService {
             }).catch(()=>{
                 reject("Logout error");
             });
+        });
+    }
+
+    static async checkAuth () {
+        return new Promise((resolve : (value:CheckAuthResponse)=>void,reject)=>{
+            let url = this.url + "/check";
+            fetch(url,{
+                method:"GET",
+                headers:{
+                    "Accept":"application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                },
+            }).then(response=>{
+                if(!response.ok){
+                    reject();
+                }else{
+                    response.json().then(result => resolve(result));
+                }
+            }).catch(reject);
         });
     }
 
