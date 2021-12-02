@@ -9,12 +9,12 @@ export interface IHouse{
     description:string,
     features:IFeature[],
     images:IImage[],
-    price:number,
-    ft_price:number,
+    price:string,
+    ft_price:string,
     address:string,
-    bedrooms_count:number,
-    showers_count:number,
-    floors_count:number,
-    garage_count:number,
-    founded_year:number
+    bedrooms_count:string,
+    showers_count:string,
+    floors_count:string,
+    garage_count:string,
+    founded_year:string
 }

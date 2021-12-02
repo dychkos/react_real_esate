@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./buttons/Button";
 import {useDispatch} from "react-redux";
-import {setShowLoginModal, setShowRegisterModal} from "../store/reducers/modal/action-creator";
+import {setShowRegisterModal} from "../store/reducers/modal/action-creator";
 import InputItem from "./InputItem";
 import {UserActionCreators} from "../store/reducers/user/action-creator";
 import {LoginRequest} from "../api/types";
@@ -14,18 +14,9 @@ const LoginForm :React.FC = () => {
     let dispatch = useDispatch();
     let loginError = useTypedSelector(state=>state.userReducer.error);
     let isLoading = useTypedSelector(state=>state.userReducer.isLoading);
-    let auth = useTypedSelector(state=>state.userReducer.isAuth);
-
-    React.useEffect(()=>{
-        closeLoginModalHandler();
-    },[auth])
 
     let openRegisterModalHandler = () =>{
         dispatch(setShowRegisterModal(true));
-    }
-
-    let closeLoginModalHandler = () =>{
-        dispatch(setShowLoginModal(false));
     }
 
     let login = (user : LoginRequest) => {
@@ -36,7 +27,7 @@ const LoginForm :React.FC = () => {
         validations: {
             email: {
                 pattern: {
-                    value: '/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/',
+                    value: '^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$',
                     message:
                         "Your email is invalid",
                 },
@@ -65,11 +56,6 @@ const LoginForm :React.FC = () => {
 
                   <div className="login-form__item">
                       <InputItem fieldName={"password"}  error={errors.password} labelText={"Password"} value={user.password || ""} onChange={handleChange('password')}  required={true} type={"password"}/>
-                  </div>
-
-                  <div className="login-form__item">
-                      <input type="checkbox" name="remember_me" id="remember_me"/>
-                      <label htmlFor="remember_me">Remember me</label>
                   </div>
 
                   <div className="login-form__footer">

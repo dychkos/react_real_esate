@@ -11,6 +11,7 @@ import {HousesListActionCreators} from "../store/reducers/houses-list/action-cre
 import Loader from "../components/Loader";
 import HouseItem from "../components/HouseItem";
 import UserSidebar from "../components/UserSidebar";
+import {RouteNames} from "../router";
 
 const UserProfile = () =>{
 
@@ -37,7 +38,7 @@ const UserProfile = () =>{
                                             You can add new house to sale
                                         </CardTitle>
                                         <CardFooter>
-                                            <Button color={"yellow"} center={true}>
+                                            <Button color={"yellow"} center={true} onClick={()=>router.push(RouteNames.CREATE_HOUSE)}>
                                                 Sale House
                                             </Button>
                                         </CardFooter>

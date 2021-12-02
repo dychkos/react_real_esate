@@ -12,13 +12,13 @@ const initialState : UserReducerState = {
 const userReducer = (state=initialState,action:UserAction):UserReducerState =>{
     switch (action.type){
         case UserActionTypes.SET_AUTH:
-            return {...state,isAuth: action.payload}
+            return {...state,isAuth: action.payload, error:""}
         case UserActionTypes.SET_USER:
-            return {...state,user: action.payload}
+            return {...state,user: action.payload, error:""}
         case UserActionTypes.SET_USER_ERROR:
-            return {...state,error:action.payload}
+            return {...state,error : action.payload}
         case UserActionTypes.SET_USER_LOADING:{
-            return {...state,isLoading:action.payload}
+            return {...state,isLoading : action.payload}
         }
         default:
             return state;

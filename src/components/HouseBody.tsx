@@ -4,6 +4,10 @@ import HouseOrder from "./HouseOrder";
 import {IHouse} from "../models/IHouse";
 import Card from "./card/Card";
 import Button from "./buttons/Button";
+import {useDispatch} from "react-redux";
+import {OrdersActionCreators} from "../store/reducers/orders/action-creator";
+import {AddOrderRequest} from "../api/types";
+import {useHistory} from "react-router-dom";
 
 
 type HouseBodyProps = {
@@ -12,6 +16,13 @@ type HouseBodyProps = {
 }
 
 const HouseBody:React.FC<HouseBodyProps> = ({house,canEdit}) =>{
+    let dispatch = useDispatch();
+    let router = useHistory();
+
+    const sendOrder = (order:AddOrderRequest) =>{
+        let house_id = house.id;
+        dispatch(OrdersActionCreators.addOrder({...order,house_id}));
+    }
 
     return(
         <section className="house">
@@ -23,12 +34,16 @@ const HouseBody:React.FC<HouseBodyProps> = ({house,canEdit}) =>{
                     <div className="col-lg-4">
                         {canEdit ?
                             <Card>
-                                <Button color={"yellow"} fullWidth={true} center={true}>
+                                <Button
+                                    onClick={()=>{router.push("/user/houses/update/"+house.id)}}
+                                    color={"yellow"}
+                                    fullWidth={true}
+                                    center={true}>
                                     Edit house
                                 </Button>
                             </Card>
                             :
-                            <HouseOrder user={house.user} onSubmit={()=>console.log("submited order")} />
+                            <HouseOrder user={house.user} onSubmit={sendOrder} />
                         }
                     </div>
                 </div>

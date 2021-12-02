@@ -29,7 +29,7 @@ const RegisterForm = () =>{
             },
             email: {
                 pattern: {
-                    value: '/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/',
+                    value: '^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$',
                     message:
                         "Your email is invalid",
                 },
@@ -64,7 +64,7 @@ const RegisterForm = () =>{
                 <div>
                     {registerError && <div className="validation-fail">{registerError}</div> }
                     <div className="login-form__item">
-                        <InputItem fieldName={"name"}  error={errors.email} labelText={"Your name"} value={user.name || ""} onChange={handleChange('name')} required={true}/>
+                        <InputItem fieldName={"name"}  error={errors.name} labelText={"Your name"} value={user.name || ""} onChange={handleChange('name')} required={true}/>
                     </div>
 
                     <div className="login-form__item">

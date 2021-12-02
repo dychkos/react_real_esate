@@ -1,12 +1,20 @@
 import {API_URL} from "../config";
 import {IUser} from "../models/IUser";
-import {CheckAuthResponse, LoginRequest, LoginResponse, RegisterRequest} from "./types";
+import {
+    Response,
+    ChangeUserInfoRequest,
+    CheckAuthResponse,
+    LoginRequest,
+    LoginResponse,
+    RegisterRequest
+} from "./types";
 
 
 
 export default class UserService {
 
     static url = API_URL+"/auth";
+    static resources_url = API_URL+"/users";
 
     static async register (user:RegisterRequest) {
         return new Promise((resolve:(value:IUser[])=>void,reject)=>{
@@ -97,6 +105,30 @@ export default class UserService {
                     response.json().then(result => resolve(result));
                 }
             }).catch(reject);
+        });
+    }
+
+    static async updateUser (user:ChangeUserInfoRequest):Promise<Response<IUser>> {
+        return new Promise((resolve,reject)=>{
+            let formData = new FormData();
+            formData.append("name",user.name);
+            formData.append("image",user.image);
+            fetch(this.resources_url,{
+                method:"POST",
+                headers:{
+                    "Accept":"application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                },
+                body:formData
+            }).then(response=>{
+                if(!response.ok){
+                    response.json().then(data => reject(data.message));
+                }else{
+                    response.json().then(result => resolve(result));
+                }
+            }).catch(()=>{
+                reject("Update user error");
+            });
         });
     }
 

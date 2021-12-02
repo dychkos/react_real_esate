@@ -4,7 +4,8 @@ import {ModalAction, ModalActionTypes, ModalReducerState} from "./types";
 let initialState:ModalReducerState={
     showLoginModal:false,
     showRegisterModal:false,
-    showAddCommentModal:false
+    showAddCommentModal:false,
+    showChangeUserInfoModal:false,
 }
 
 const modalReducer = (state = initialState,action:ModalAction) =>{
@@ -29,6 +30,12 @@ const modalReducer = (state = initialState,action:ModalAction) =>{
             let newState = {...state};
             newState = hideAllModals(newState);
             return {...newState, showAddCommentModal: action.payload};
+        }
+
+        case ModalActionTypes.SET_SHOW_CHANGE_USER_INFO_MODAL: {
+            let newState = {...state};
+            newState = hideAllModals(newState);
+            return {...newState, showChangeUserInfoModal: action.payload};
         }
 
         default:

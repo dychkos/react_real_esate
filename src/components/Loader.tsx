@@ -11,6 +11,8 @@ const Loader:React.FC<LoaderProps> = ({fullSize}) => {
         position:"absolute" as "absolute",
         display:"flex",
         zIndex:999,
+        top:0,
+        left:0,
         alignItems:"center",
         justifyContent:"center",
         width:"100%",

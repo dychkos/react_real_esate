@@ -2,6 +2,7 @@ import React, {ReactElement, ReactNode} from "react";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 import AddCommentModal from "./AddCommentModal";
+import ChangeUserInfoModal from "./ChangeUserInfoModal";
 
 
 export type ModalProps = {
@@ -17,6 +18,7 @@ const Modal:React.FC = (props)=>{
             <LoginModal/>
             <RegisterModal/>
             <AddCommentModal/>
+            <ChangeUserInfoModal/>
         </div>
     )
 }

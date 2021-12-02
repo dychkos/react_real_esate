@@ -28,7 +28,6 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
     const [data, setData] = useState<T>((options?.initialValues || {}) as T);
     const [errors, setErrors] = useState<ErrorRecord<T>>({});
 
-    // Needs to extend unknown so we can add a generic to an arrow function
     const handleChange = <S extends unknown>(
         key: keyof T,
         sanitizeFn?: (value: string) => S
@@ -55,7 +54,7 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
                 }
 
                 const pattern = validation?.pattern;
-                if (pattern?.value && RegExp(pattern.value).test(value)) {
+                if (pattern?.value && !RegExp(pattern.value).test(value)) {
                     valid = false;
                     newErrors[key] = pattern.message;
                 }

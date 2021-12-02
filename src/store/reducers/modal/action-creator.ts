@@ -1,4 +1,11 @@
-import {HideModals, ModalActionTypes, SetShowAddCommentModal, SetShowLoginModal, SetShowRegisterModal} from "./types";
+import {
+    HideModals,
+    ModalActionTypes,
+    SetShowAddCommentModal,
+    SetShowChangeUserInfoModal,
+    SetShowLoginModal,
+    SetShowRegisterModal
+} from "./types";
 
 export let setShowLoginModal = (payload:boolean) : SetShowLoginModal=>{
     return {
@@ -20,6 +27,15 @@ export let setShowAddCommentModal = (payload:boolean) : SetShowAddCommentModal=>
         payload
     }
 }
+
+
+export let setShowChangeUserInfoModal = (payload:boolean) : SetShowChangeUserInfoModal=>{
+    return {
+        type:ModalActionTypes.SET_SHOW_CHANGE_USER_INFO_MODAL,
+        payload
+    }
+}
+
 
 export let hideAllModal = () : HideModals=>{
     return {

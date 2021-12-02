@@ -1,6 +1,6 @@
 import {API_URL} from "../config";
 import {IComment} from "../models/IComment";
-import {AddCommentRequest, LoginRequest, LoginResponse} from "./types";
+import {AddCommentRequest, Response} from "./types";
 
 export default class CommentService {
 
@@ -24,7 +24,7 @@ export default class CommentService {
             }).catch(reject);
         });
     }
-    static async addComment (comment:AddCommentRequest) {
+    static async addComment (comment:AddCommentRequest):Promise<Response<IComment>> {
         return new Promise((resolve,reject)=>{
             let formData = new FormData();
             formData.append("author_name",comment.author_name);

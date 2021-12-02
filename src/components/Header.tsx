@@ -39,7 +39,9 @@ const Header:React.FC = () =>{
             <div className="logo">
                 <NavLink to={RouteNames.HOME}> <img src={Logo} alt="logo"/></NavLink>
             </div>
-            <div className={classNames("header__nav", {
+            <div
+                onClick={toggleBurger}
+                className={classNames("header__nav", {
                 open: burgerOpen
             })}>
                 <ul className="nav">
@@ -52,7 +54,7 @@ const Header:React.FC = () =>{
                     {auth && (
                         <>
                             <li className="nav__item">
-                                <NavLink to={RouteNames.USER_PROFILE}>Orders</NavLink>
+                                <NavLink to={RouteNames.ORDERS}>Orders</NavLink>
                             </li>
                             <li onClick={logout} className="nav__item">Logout</li>
                         </>

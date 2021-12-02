@@ -8,8 +8,10 @@ import {HouseActionCreators} from "../store/reducers/house/action-creator";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import {HousesListActionCreators} from "../store/reducers/houses-list/action-creator";
+import Card from "../components/card/Card";
+import CardTitle from "../components/card/CardTitle";
 
-type UrlParams = {
+export type UrlParams = {
     id: string;
 };
 
@@ -37,20 +39,34 @@ const HousePage:React.FC = () =>{
 
     return(
         <main>
-            {(isHouseLoading || !house) ?
+            {(isHouseLoading) ?
                 <Loader fullSize={true}/>
             :
-                <div>
-                    <PageHeader title={house.name} extraTitle={house.address}>
-                        <div className="page-header__title page-header__title_text-end house-price">
-                            <h3>${house.price}</h3>
-                            <h6 className="gray">${house.ft_price}/sq ft</h6>
-                        </div>
-                    </PageHeader>
+                house ? (
+                    <div>
 
-                    <HouseBody house={house} canEdit={canEdit()} />
+                        <PageHeader title={house.name} extraTitle={house.address}>
+                            <div className="page-header__title page-header__title_text-end house-price">
+                                <h3>${house.price}</h3>
+                                <h6 className="gray">${house.ft_price}/sq ft</h6>
+                            </div>
+                        </PageHeader>
 
-                    <Similar houses={similarHouses} isLoading={isSimilarHouseLoading}/>
+                        <HouseBody house={house} canEdit={canEdit()} />
+
+                        <Similar houses={similarHouses} isLoading={isSimilarHouseLoading}/>
+                    </div>
+                ) : <div>
+                    <PageHeader title="404 Not found"/>
+                    <div className="container">
+                        <section className="py-5 my-5">
+                            <Card>
+                               <CardTitle>
+                                   House was not found
+                               </CardTitle>
+                            </Card>
+                        </section>
+                    </div>
                 </div>
             }
         </main>

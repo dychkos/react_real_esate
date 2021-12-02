@@ -10,6 +10,9 @@ import {useTypedSelector} from "./hooks/useTypedSelector";
 import Loader from "./components/Loader";
 import {useDispatch} from "react-redux";
 import AppActionCreators from "./store/reducers/app/action-creator";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
 
@@ -29,6 +32,7 @@ function App() {
                 <AppRouter/>
                 <Footer/>
                 <Modal/>
+                <ToastContainer />
             </BrowserRouter>
         : <Loader fullSize={true}/>
         }

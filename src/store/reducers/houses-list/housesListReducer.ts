@@ -22,9 +22,9 @@ const housesListReducer= (state = initialState, action:HousesListAction) : House
             let houses = [...state.houses];
             let sorted = houses.sort((a,b)=>{
                 if (action.payload.reverse){
-                    return (a[action.payload.option] - b[action.payload.option]);
+                    return (parseInt(a[action.payload.option]) - parseInt(b[action.payload.option]));
                 }else {
-                    return (b[action.payload.option] - a[action.payload.option]);
+                    return (parseInt(b[action.payload.option]) - parseInt(a[action.payload.option]));
                 }
             });
             return {...state,houses:sorted}

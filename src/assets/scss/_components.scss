@@ -69,7 +69,7 @@
 	&__preview{
 		position: relative;
 		/* cursor: pointer; */
-		#uploaded-image{
+		.uploaded-image{
 			height: 150px;
 			width: 150px;
 			object-fit: cover;

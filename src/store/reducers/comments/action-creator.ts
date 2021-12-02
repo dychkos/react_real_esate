@@ -9,7 +9,9 @@ import {
 
 import {IComment} from "../../../models/IComment";
 import CommentService from "../../../api/CommentService";
-import {AddCommentRequest} from "../../../api/types";
+import {AddCommentRequest, Response} from "../../../api/types";
+import {toast} from "react-toastify";
+import {setShowAddCommentModal} from "../modal/action-creator";
 
 
 export const CommentsActionCreators = {
@@ -27,13 +29,18 @@ export const CommentsActionCreators = {
             dispatch(CommentsActionCreators.setCommentsLoading(false));
         }
     },
-    addComment :(comment:AddCommentRequest)=>async (dispatch:AppDispatch,state:RootState)=>{
+    addComment :(comment:AddCommentRequest)=>async (dispatch:AppDispatch,getState:()=>RootState)=>{
         dispatch(CommentsActionCreators.setCommentsLoading(true));
         try {
-            let result = await CommentService.addComment(comment);
-            console.log(result)
-            //dispatch(CommentsActionCreators.setComments(...state.commentsReducer.comments,result));
+            const {comments} = getState().commentsReducer;
+            let result:Response<IComment> = await CommentService.addComment(comment);
+            dispatch(CommentsActionCreators.setComments([...comments,result.data as IComment]));
+            dispatch(setShowAddCommentModal(false));
+            toast("Comment success added",{
+                position:"top-center",
+            });
         }catch (e) {
+            console.log(e)
             dispatch(CommentsActionCreators.setCommentsError("Comments adding error"));
         }finally {
             dispatch(CommentsActionCreators.setCommentsLoading(false));

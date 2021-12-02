@@ -1,8 +1,14 @@
 import {IUser} from "../../../models/IUser";
 import {SetAuth, SetUser, SetUserError, SetUserLoading, UserActionTypes} from "./types";
-import {LoginRequest, RegisterRequest} from "../../../api/types";
+import {
+    ChangeUserInfoRequest,
+    LoginRequest,
+    RegisterRequest, Response
+} from "../../../api/types";
 import {AppDispatch} from "../../index";
 import UserService from "../../../api/UserService";
+import {toast} from "react-toastify";
+import {setShowAddCommentModal, setShowLoginModal, setShowRegisterModal} from "../modal/action-creator";
 
 export const UserActionCreators = {
     setUser : (payload : Awaited<Promise<IUser>>):SetUser =>({type:UserActionTypes.SET_USER,payload}),
@@ -18,6 +24,10 @@ export const UserActionCreators = {
                localStorage.setItem("token",result.token);
                dispatch(UserActionCreators.setUser(result.data));
                dispatch(UserActionCreators.setAuth(true));
+               dispatch(setShowRegisterModal(false));
+               toast.success("Successful registered",{
+                   position:"top-center",
+               });
            }
         }catch (e){
             dispatch(UserActionCreators.setUserError("Registration error"));
@@ -32,6 +42,7 @@ export const UserActionCreators = {
             localStorage.setItem("token",result.token);
             dispatch(UserActionCreators.setUser(result.data));
             dispatch(UserActionCreators.setAuth(true));
+            dispatch(setShowLoginModal(false));
         }catch (error){
             dispatch(UserActionCreators.setUserError(error as string));
         }finally {
@@ -51,23 +62,24 @@ export const UserActionCreators = {
             dispatch(UserActionCreators.setUserLoading(false));
         }
     },
+    updateUser :(user:ChangeUserInfoRequest)=>async (dispatch:AppDispatch)=>{
+        dispatch(UserActionCreators.setUserLoading(true));
+        try {
+            let result:Response<IUser> = await UserService.updateUser(user);
+            dispatch(UserActionCreators.setUser(result.data as IUser));
+            dispatch(setShowAddCommentModal(false));
+            toast.success("Info success updated",{
+                position:"top-center",
+            });
+        }catch (e) {
+            dispatch(UserActionCreators.setUserError("Error with updating info"));
+        }finally {
+            dispatch(UserActionCreators.setUserLoading(false));
+        }
+
+    },
 
 
 
 
 }
-//
-//
-// let validateRegisterUser = (user:UserRegister):string =>{
-//     let error = "";
-//     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.(user.email)){
-//         error = "You have entered an invalid email address!"
-//     }else if(user.password.length < 6){
-//         error = "You password must have at least 6 character"
-//     }else if(user.password !== user.confirm_password){
-//         error = "You passwords are not same"
-//     }
-//
-//     return error;
-// }
-//
